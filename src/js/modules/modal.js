@@ -38,6 +38,6 @@ function modal() {
     ".popup_engineer .popup_close"
   );
   bindModal(".phone_link", ".popup", ".popup .popup_close");
-  showModalOnTimeout(".popup", 3000);
+  // showModalOnTimeout(".popup", 60000);
 }
 export default modal;
