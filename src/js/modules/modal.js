@@ -1,4 +1,3 @@
-console.log("modal() there");
 function modal() {
   function bindModal(triggerSelector, modalSelector, closeSelector) {
     const trigger = document.querySelectorAll(triggerSelector),
@@ -18,8 +17,6 @@ function modal() {
     });
     // close event handler when clicked outside modal
     modal.addEventListener("click", (e) => {
-      console.log(e.target);
-      console.log(modal);
       if (modal === e.target) {
         modal.style.display = "none";
         document.body.style.overflow = "";

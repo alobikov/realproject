@@ -4,7 +4,6 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeTab) => {
   const header = document.querySelector(headerSelector),
     tab = document.querySelectorAll(tabSelector),
     content = document.querySelectorAll(contentSelector);
-  console.log(content);
 
   header.addEventListener("click", ({ target }) => {
     if (
@@ -15,8 +14,6 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeTab) => {
       )
     ) {
       tab.forEach((item, idx) => {
-        console.log(target.parentNode);
-        console.log(item);
         if (target.parentNode === item || target === item) {
           hideTabContent();
           showTabContent(idx);
