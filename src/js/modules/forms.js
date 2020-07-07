@@ -1,7 +1,13 @@
 const forms = () => {
   const forms = document.querySelectorAll("form"),
-    inputs = document.querySelectorAll("input");
-  console.dir(forms);
+    inputs = document.querySelectorAll("input"),
+    phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+
+  phoneInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      input.value = input.value.replace(/\D/, "");
+    });
+  });
 
   forms.forEach((form) => {
     form.addEventListener("submit", (e) => {
@@ -11,9 +17,9 @@ const forms = () => {
       messageElement.classList.add("status");
       form.appendChild(messageElement);
 
-      const formData = new FormData();
-      formData.append("name", "John");
-      formData.append("password", "John123");
+      const formData = new FormData(form);
+      // formData.append("name", "John");
+      // formData.append("password", "John123");
       for (var d of formData) console.log(d);
       postData("http://localhost:3000/reflect", formData)
         .then((data) => {
@@ -41,10 +47,10 @@ const forms = () => {
     document.querySelector(".status").textContent = message.loading;
     await new Promise((resolve) => setTimeout(resolve, 500));
     const res = await fetch(url, {
-      body: "email=test@example.com&password=pw",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
+      body: data,
+      // headers: {
+      //   "Content-Type": "application/x-www-form-urlencoded",
+      // },
       method: "post",
     });
     return await res.text();
