@@ -1,13 +1,19 @@
-const forms = () => {
+const forms = (formState) => {
   const forms = document.querySelectorAll("form"),
-    inputs = document.querySelectorAll("input"),
-    phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+    inputs = document.querySelectorAll("input");
 
-  phoneInputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      input.value = input.value.replace(/\D/, "");
+  const changeNumInputs = (selector) => {
+    console.log("changeNumInputes() called");
+    const inputs = document.querySelectorAll(selector);
+    inputs.forEach((input) => {
+      input.addEventListener("input", () => {
+        input.value = input.value.replace(/\D/, "");
+      });
     });
-  });
+  };
+
+  // user_phone inputs fields must accept only digits
+  changeNumInputs('input[name="user_phone"]');
 
   forms.forEach((form) => {
     form.addEventListener("submit", (e) => {
@@ -18,6 +24,12 @@ const forms = () => {
       form.appendChild(messageElement);
 
       const formData = new FormData(form);
+      console.log("current form", form);
+      if (form.getAttribute("data-calc") === "end") {
+        for (let key in formState) {
+          formData.append(key, formState[key]);
+        }
+      }
       // formData.append("name", "John");
       // formData.append("password", "John123");
       for (var d of formData) console.log(d);

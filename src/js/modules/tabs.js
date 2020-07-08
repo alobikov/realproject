@@ -1,6 +1,12 @@
 import { _ } from "core-js";
 
-const tabs = (headerSelector, tabSelector, contentSelector, activeTab) => {
+const tabs = (
+  headerSelector,
+  tabSelector,
+  contentSelector,
+  activeTab,
+  display = "block"
+) => {
   const header = document.querySelector(headerSelector),
     tab = document.querySelectorAll(tabSelector),
     content = document.querySelectorAll(contentSelector);
@@ -32,7 +38,7 @@ const tabs = (headerSelector, tabSelector, contentSelector, activeTab) => {
   }
 
   function showTabContent(idx = 0) {
-    content[idx].style.display = "block";
+    content[idx].style.display = display;
     tab[idx].classList.add(activeTab);
   }
 
