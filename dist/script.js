@@ -33474,6 +33474,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/state */ "./src/js/modules/state.js");
+/* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+
 
 
 
@@ -33487,12 +33489,14 @@ document.addEventListener("DOMContentLoaded", function () {
     frameType: "tree",
     profile: "xex"
   };
+  var deadline = "2020-07-14";
   Object(_modules_state__WEBPACK_IMPORTED_MODULE_4__["default"])(formState);
   Object(_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])(formState);
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])(".glazing_slider", ".glazing_block", ".glazing_content", "active");
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])(".decoration_slider", ".no_click", ".decoration_content > div > div", "after_click");
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])(".balcon_icons", ".balcon_icons_img", ".big_img > img", "do_image_more", "inline-block");
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])(formState);
+  Object(_modules_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('#timer', deadline);
 });
 
 /***/ }),
@@ -33853,6 +33857,64 @@ var tabs = function tabs(headerSelector, tabSelector, contentSelector, activeTab
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (tabs);
+
+/***/ }),
+
+/***/ "./src/js/modules/timer.js":
+/*!*********************************!*\
+  !*** ./src/js/modules/timer.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var timer = function timer(id, deadline) {
+  /// input: '2020-12-12'
+  function findDeadlineRemainder(deadline) {
+    var t = Date.parse(deadline) - Date.now(),
+        sec = Math.floor(t / 1000 % 60),
+        min = Math.floor(t / (1000 * 60) % 60),
+        hour = Math.floor(t / (1000 * 3600) % 24),
+        day = Math.floor(t / (1000 * 3600 * 24));
+    return {
+      total: t,
+      seconds: sec,
+      minutes: min,
+      hours: hour,
+      days: day
+    };
+  }
+
+  var timerElement = document.querySelector(id),
+      days = timerElement.querySelector('#days'),
+      hours = timerElement.querySelector('#hours'),
+      minutes = timerElement.querySelector('#minutes'),
+      seconds = timerElement.querySelector('#seconds');
+  var intervalTimer = setInterval(updateClock, 1000);
+  updateClock();
+
+  function updateClock() {
+    var t = findDeadlineRemainder(deadline); // update view
+
+    days.textContent = addZero(t.days);
+    hours.textContent = addZero(t.hours);
+    minutes.textContent = addZero(t.minutes);
+    seconds.textContent = addZero(t.seconds); // stop interval execution
+
+    if (t <= 0) clearInterval(intervalTimer);
+  }
+
+  function addZero(val) {
+    if (val < 10) {
+      return "0" + val;
+    } else {
+      return val;
+    }
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (timer);
 
 /***/ }),
 
